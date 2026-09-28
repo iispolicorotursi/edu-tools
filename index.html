@@ -6,6 +6,10 @@
   <meta name="theme-color" content="#3969b9">
   <title>EduTools — I.I.S. Policoro-Tursi</title>
 
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="icona.png">
+  <link rel="apple-touch-icon" href="icona.png">
+
   <!-- SEO & Meta Tags -->
   <meta name="description" content="EduTools — Guida interattiva e catalogo di strumenti didattici digitali per i docenti dell'I.I.S. Policoro-Tursi.">
   <meta name="keywords" content="EduTools, Policoro-Tursi, IIS Policoro Tursi, strumenti didattici, scuola digitale, quiz, mappe concettuali">
@@ -16,10 +20,10 @@
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
   
-  <!-- Google Fonts -->
+  <!-- Google Fonts: Outfit -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     :root {
@@ -31,14 +35,14 @@
       --accent-purple: #c084fc;
       --accent-pink: #f472b6;
       --bg: #f8fafc;
-      --dark-border: #334155; /* Bordo più leggero Slate-700 invece del nero pieno */
+      --dark-border: #334155;
       --pop-shadow: 4px 4px 12px rgba(15, 23, 42, 0.08), 3px 3px 0px #334155;
       --pop-shadow-sm: 2px 2px 0px #334155;
       --pop-shadow-lg: 6px 6px 16px rgba(15, 23, 42, 0.12), 5px 5px 0px #334155;
     }
 
     body {
-      font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+      font-family: 'Outfit', system-ui, -apple-system, sans-serif;
       background-color: var(--bg);
       background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
       background-size: 24px 24px;
@@ -103,7 +107,12 @@
     }
   </style>
 </head>
-<body class="min-h-screen flex flex-col">
+<body class="min-h-screen flex flex-col relative overflow-x-hidden">
+
+  <!-- Bottom-Left Watermark Image -->
+  <div class="fixed bottom-0 left-0 pointer-events-none z-0 opacity-20 max-w-[260px] md:max-w-[340px] p-4 select-none">
+    <img src="bg.png" alt="" class="w-full h-auto object-contain" onerror="this.style.display='none'">
+  </div>
 
   <!-- Toast Notification Container -->
   <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
@@ -115,8 +124,8 @@
       <!-- Modal Header -->
       <div class="bg-amber-300 p-5 border-b-2 border-slate-700 flex items-start justify-between gap-4">
         <div class="flex items-center gap-3">
-          <div id="modalIcon" class="w-12 h-12 bg-white rounded-xl neo-box-sm flex items-center justify-center font-extrabold text-xl text-slate-800">
-            PT
+          <div id="modalIcon" class="w-12 h-12 bg-white rounded-xl neo-box-sm flex items-center justify-center font-extrabold text-2xl text-slate-800">
+            🎓
           </div>
           <div>
             <h3 id="modalTitle" class="text-2xl font-extrabold text-slate-900 leading-tight">--</h3>
@@ -175,15 +184,15 @@
   </div>
 
   <!-- MAIN CONTAINER -->
-  <div class="max-w-6xl w-full mx-auto px-4 py-6 flex-1 flex flex-col">
+  <div class="max-w-6xl w-full mx-auto px-4 py-6 flex-1 flex flex-col relative z-10">
 
     <!-- HEADER -->
     <header class="mb-8 flex flex-col md:flex-row items-center justify-between gap-4">
       
       <!-- LOGO -->
       <a href="#" id="logoButton" class="flex items-center gap-3 group">
-        <div class="w-12 h-12 bg-amber-300 border-2 border-slate-700 rounded-2xl neo-box flex items-center justify-center font-black text-xl text-slate-900 group-hover:rotate-6 transition-transform">
-          PT
+        <div class="w-12 h-12 bg-amber-300 border-2 border-slate-700 rounded-2xl neo-box flex items-center justify-center font-black text-2xl text-slate-900 group-hover:rotate-6 transition-transform">
+          🎓
         </div>
         <div>
           <span class="text-2xl font-black text-slate-900 tracking-tight block">EduTools</span>
@@ -403,10 +412,10 @@
   </div>
 
   <!-- FOOTER -->
-  <footer class="bg-white border-t-2 border-slate-700 mt-12 py-6">
+  <footer class="bg-white border-t-2 border-slate-700 mt-12 py-6 relative z-10">
     <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-extrabold text-slate-600">
       <div class="flex items-center gap-2">
-        <span class="w-6 h-6 bg-amber-300 rounded-lg border border-slate-700 flex items-center justify-center font-black text-slate-900 text-xs">PT</span>
+        <span class="w-6 h-6 bg-amber-300 rounded-lg border border-slate-700 flex items-center justify-center font-black text-slate-900 text-xs">🎓</span>
         <span>EduTools — I.I.S. Policoro-Tursi</span>
       </div>
       <div>
@@ -782,9 +791,6 @@
       }
     };
 
-    /* =========================================================
-       DECISION TREE STEPS CONFIGURATION
-    /* Updating tree steps icons and text */
     const treeSteps = {
       root: {
         stepName: "Passaggio 1 di 2",
@@ -954,14 +960,10 @@
       }
     };
 
-    /* =========================================================
-       APP STATE MANAGEMENT
-       ========================================================= */
-    let currentView = "tree"; // 'tree' or 'catalog'
+    let currentView = "tree";
     let treeHistory = ["root"];
-    let favorites = JSON.parse(localStorage.getItem("pt_tools_favs") || "[]");
+    let favorites = JSON.parse(localStorage.getItem("edutools_favs") || "[]");
 
-    // Catalog Filter State
     let catalogState = {
       searchQuery: "",
       category: "all",
@@ -971,10 +973,7 @@
       noLoginOnly: false
     };
 
-    /* =========================================================
-       DOM ELEMENTS
-       ========================================================= */
-    // Nav
+    // Nav elements
     const navTree = document.getElementById("navTree");
     const navCatalog = document.getElementById("navCatalog");
     const navFavs = document.getElementById("navFavs");
@@ -1036,9 +1035,6 @@
     const modalExternalLink = document.getElementById("modalExternalLink");
     let activeModalToolId = null;
 
-    /* =========================================================
-       HELPER FUNCTIONS & TOAST SYSTEM
-       ========================================================= */
     function showToast(message, icon = "✨") {
       const toastContainer = document.getElementById("toastContainer");
       const toast = document.createElement("div");
@@ -1073,27 +1069,21 @@
         favorites.push(toolId);
         showToast("Aggiunto ai preferiti!", "⭐");
       }
-      localStorage.setItem("pt_tools_favs", JSON.stringify(favorites));
+      localStorage.setItem("edutools_favs", JSON.stringify(favorites));
       updateFavBadge();
       
-      // Re-render UI components if visible
       renderCatalog();
       if (activeModalToolId) updateModalFavButton(activeModalToolId);
       if (!resultArea.classList.contains("hidden")) updateResultFavButton();
     }
 
-    /* =========================================================
-       DECISION TREE RENDERER
-       ========================================================= */
     function renderTreeStep() {
       const currentStepKey = treeHistory[treeHistory.length - 1];
       const stepData = treeSteps[currentStepKey];
 
-      // Hide result area and show question area
       resultArea.classList.add("hidden");
       questionArea.classList.remove("hidden");
 
-      // Update Breadcrumbs
       if (treeHistory.length > 1) {
         pathContainer.classList.remove("hidden");
         pathBreadcrumbs.innerHTML = "";
@@ -1123,18 +1113,15 @@
         pathContainer.classList.add("hidden");
       }
 
-      // Back button visibility
       if (treeHistory.length > 1) {
         backButton.classList.remove("hidden");
       } else {
         backButton.classList.add("hidden");
       }
 
-      // Populate Step Info
       stepIndicator.textContent = stepData.stepName || "Passaggio";
       questionTitle.textContent = stepData.title;
 
-      // Populate Options Grid
       optionsGrid.innerHTML = "";
       stepData.options.forEach(option => {
         const btn = document.createElement("button");
@@ -1176,14 +1163,12 @@
       resultPedagogy.textContent = tool.pedagogicalTip || "Eccellente strumento per la didattica interattiva.";
       resultLink.href = tool.url;
 
-      // Badges
       resultBadges.innerHTML = `
         <span class="px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-amber-200 border-2 border-slate-900">💰 ${tool.pricing}</span>
         ${tool.gdpr ? '<span class="px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-emerald-200 border-2 border-slate-900">🛡️ GDPR Compliant</span>' : ''}
         ${tool.noLogin ? '<span class="px-2.5 py-0.5 rounded-full text-xs font-extrabold bg-sky-200 border-2 border-slate-900">🔓 Senza Login</span>' : ''}
       `;
 
-      // Alternatives
       resultAlternatives.innerHTML = "";
       if (alternatives.length > 0) {
         alternatives.forEach(altId => {
@@ -1216,14 +1201,10 @@
       }
     }
 
-    /* =========================================================
-       CATALOG RENDERER & SEARCH ENGINE
-       ========================================================= */
     function filterTools() {
       const query = catalogState.searchQuery.toLowerCase().trim();
 
       return Object.values(toolsData).filter(tool => {
-        // Search text
         if (query) {
           const matchesTitle = tool.name.toLowerCase().includes(query);
           const matchesDesc = tool.description.toLowerCase().includes(query);
@@ -1231,17 +1212,14 @@
           if (!matchesTitle && !matchesDesc && !matchesTags) return false;
         }
 
-        // Category Filter
         if (catalogState.category !== "all" && tool.category !== catalogState.category) {
           return false;
         }
 
-        // Pricing Filter
         if (catalogState.pricing !== "all" && tool.pricing !== catalogState.pricing) {
           return false;
         }
 
-        // Toggles
         if (catalogState.favsOnly && !isFavorite(tool.id)) return false;
         if (catalogState.gdprOnly && !tool.gdpr) return false;
         if (catalogState.noLoginOnly && !tool.noLogin) return false;
@@ -1254,10 +1232,8 @@
       const filtered = filterTools();
       const totalCount = Object.keys(toolsData).length;
 
-      // Count text
       catalogCountText.textContent = `Mostrando ${filtered.length} di ${totalCount} strumenti didattici`;
 
-      // Active filters badge check
       const hasActiveFilters = catalogState.searchQuery || catalogState.category !== "all" || catalogState.pricing !== "all" || catalogState.favsOnly || catalogState.gdprOnly || catalogState.noLoginOnly;
       if (hasActiveFilters) {
         activeFilterBadge.classList.remove("hidden");
@@ -1361,9 +1337,6 @@
         : "neo-btn bg-slate-100 text-slate-900 text-xs font-extrabold px-3 py-1.5 rounded-lg flex items-center gap-1";
     }
 
-    /* =========================================================
-       TOOL MODAL SYSTEM
-       ========================================================= */
     function openToolModal(toolId) {
       const tool = toolsData[toolId];
       if (!tool) return;
@@ -1386,7 +1359,6 @@
 
       modalExternalLink.href = tool.url;
 
-      // Tags
       modalTags.innerHTML = "";
       if (tool.tags) {
         tool.tags.forEach(tag => {
@@ -1416,9 +1388,6 @@
       activeModalToolId = null;
     }
 
-    /* =========================================================
-       NAVIGATION VIEW SWITCHER
-       ========================================================= */
     function switchView(view) {
       currentView = view;
 
@@ -1446,9 +1415,6 @@
       }
     }
 
-    /* =========================================================
-       EVENT LISTENERS ATTACHMENT
-       ========================================================= */
     window.addEventListener("DOMContentLoaded", () => {
       // Nav listeners
       navTree.onclick = () => switchView("tree");
