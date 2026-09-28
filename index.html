@@ -4,18 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
   <meta name="theme-color" content="#3969b9">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="EduTools">
-  <title>EduTools — I.I.S. Policoro-Tursi</title>
+  <title>EduTools per l'I.I.S. "Policoro-Tursi"</title>
 
-  <!-- Favicon SVG Inline -->
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23fde047'/><text y='68' x='15' font-size='60'>🎓</text></svg>">
-  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23fde047'/><text y='68' x='15' font-size='60'>🎓</text></svg>">
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="icona.png">
+  <link rel="apple-touch-icon" href="icona.png">
 
   <!-- SEO & Meta Tags -->
   <meta name="description" content="EduTools — Guida interattiva e catalogo di strumenti didattici digitali per i docenti dell'I.I.S. Policoro-Tursi.">
-  <meta name="keywords" content="EduTools, Policoro-Tursi, IIS Policoro Tursi, strumenti didattici, scuola digitale, quiz, mappe concettuali, PWA">
+  <meta name="keywords" content="EduTools, Policoro-Tursi, IIS Policoro Tursi, strumenti didattici, scuola digitale, quiz, mappe concettuali">
+  <meta property="og:title" content="EduTools per l'I.I.S. 'Policoro-Tursi'">
+  <meta property="og:description" content="Trova l'applicazione didattica perfetta per la tua lezione all'I.I.S. Policoro-Tursi.">
+  <meta property="og:type" content="website">
 
   <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -47,7 +47,6 @@
       background-image: radial-gradient(#cbd5e1 1.5px, transparent 1.5px);
       background-size: 24px 24px;
       color: #1e293b;
-      overscroll-behavior-y: none;
     }
 
     .neo-box {
@@ -117,11 +116,6 @@
 
   <!-- Toast Notification Container -->
   <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-3 pointer-events-none"></div>
-
-  <!-- Online/Offline Banner -->
-  <div id="offlineBadge" class="hidden bg-amber-400 text-slate-900 border-b-2 border-slate-700 py-1 px-4 text-center text-xs font-black z-50">
-    ⚡ Modalità Offline attiva — Tutte le funzionalità locali rimangono disponibili!
-  </div>
 
   <!-- TOOL DETAIL MODAL -->
   <div id="toolModal" class="fixed inset-0 z-40 hidden modal-backdrop flex items-center justify-center p-4">
@@ -202,12 +196,12 @@
         </div>
         <div>
           <span class="text-2xl font-black text-slate-900 tracking-tight block">EduTools</span>
-          <span class="text-xs font-bold text-slate-500 block -mt-1">I.I.S. Policoro-Tursi</span>
+          <span class="text-xs font-bold text-slate-500 block -mt-1">I.I.S. "Policoro-Tursi"</span>
         </div>
       </a>
 
       <!-- NAVIGATION TABS -->
-      <nav class="bg-white p-1.5 border-2 border-slate-700 rounded-full neo-box-sm flex items-center gap-1 flex-wrap justify-center">
+      <nav class="bg-white p-1.5 border-2 border-slate-700 rounded-full neo-box-sm flex items-center gap-1">
         <button id="navTree" type="button" class="px-5 py-2 rounded-full font-extrabold text-sm transition-all bg-blue-600 text-white border border-slate-700 shadow-sm">
           📍 Percorso Guidato
         </button>
@@ -220,11 +214,8 @@
         </button>
       </nav>
 
-      <!-- UTILITY & PWA INSTALL ACTIONS -->
+      <!-- UTILITY ACTIONS -->
       <div class="flex items-center gap-2">
-        <button id="pwaInstallBtn" type="button" class="hidden neo-btn bg-emerald-400 hover:bg-emerald-500 text-slate-900 font-extrabold px-3.5 py-2 rounded-xl text-xs flex items-center gap-1.5 animate-bounce">
-          📲 <span>Installa App</span>
-        </button>
         <button id="randomToolBtn" type="button" class="neo-btn bg-indigo-100 hover:bg-indigo-200 text-indigo-950 font-extrabold px-3.5 py-2 rounded-xl text-xs flex items-center gap-1.5" title="Scopri uno strumento a caso">
           🎲 <span>Suggerimento Casuale</span>
         </button>
@@ -425,119 +416,13 @@
     <div class="max-w-6xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs font-extrabold text-slate-600">
       <div class="flex items-center gap-2">
         <span class="w-6 h-6 bg-amber-300 rounded-lg border border-slate-700 flex items-center justify-center font-black text-slate-900 text-xs">🎓</span>
-        <span>EduTools — I.I.S. Policoro-Tursi (PWA Offline Ready)</span>
+        <span>EduTools per l'I.I.S. "Policoro-Tursi"</span>
       </div>
       <div>
         <span>Strumento didattico ad uso dei docenti dell'istituto 🎓</span>
       </div>
     </div>
   </footer>
-
-  <script>
-    /* =========================================================
-       DYNAMIC PWA MANIFEST AND SERVICE WORKER REGISTRATION
-       ========================================================= */
-    (function initPWA() {
-      // 1. Generate Web App Manifest dynamically
-      const svgIconData = "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='20' fill='%23fde047'/><text y='68' x='15' font-size='60'>🎓</text></svg>";
-      
-      const manifest = {
-        name: "EduTools — I.I.S. Policoro-Tursi",
-        short_name: "EduTools",
-        description: "Guida e catalogo di strumenti didattici digitali per i docenti dell'I.I.S. Policoro-Tursi",
-        start_url: "./",
-        display: "standalone",
-        orientation: "any",
-        background_color: "#f8fafc",
-        theme_color: "#3969b9",
-        icons: [
-          {
-            src: svgIconData,
-            sizes: "192x192",
-            type: "image/svg+xml",
-            purpose: "any maskable"
-          },
-          {
-            src: svgIconData,
-            sizes: "512x512",
-            type: "image/svg+xml",
-            purpose: "any maskable"
-          }
-        ]
-      };
-
-      const manifestBlob = new Blob([JSON.stringify(manifest)], { type: "application/json" });
-      const manifestURL = URL.createObjectURL(manifestBlob);
-      const link = document.createElement("link");
-      link.rel = "manifest";
-      link.href = manifestURL;
-      document.head.appendChild(link);
-
-      // 2. Register Service Worker using Inline Blob
-      if ("serviceWorker" in navigator) {
-        const swCode = `
-          const CACHE_NAME = 'edutools-pwa-v1';
-          const ASSETS = [
-            './',
-            'https://cdn.tailwindcss.com',
-            'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap'
-          ];
-
-          self.addEventListener('install', (event) => {
-            event.waitUntil(
-              caches.open(CACHE_NAME).then((cache) => {
-                return cache.addAll(ASSETS).catch(() => {});
-              })
-            );
-            self.skipWaiting();
-          });
-
-          self.addEventListener('activate', (event) => {
-            event.waitUntil(
-              caches.keys().then((keys) => {
-                return Promise.all(
-                  keys.map((key) => {
-                    if (key !== CACHE_NAME) return caches.delete(key);
-                  })
-                );
-              })
-            );
-            self.clients.claim();
-          });
-
-          self.addEventListener('fetch', (event) => {
-            if (event.request.method !== 'GET') return;
-            event.respondWith(
-              caches.match(event.request).then((cachedResponse) => {
-                if (cachedResponse) {
-                  fetch(event.request).then((networkResponse) => {
-                    if (networkResponse && networkResponse.status === 200) {
-                      caches.open(CACHE_NAME).then((cache) => cache.put(event.request, networkResponse));
-                    }
-                  }).catch(() => {});
-                  return cachedResponse;
-                }
-                return fetch(event.request).then((networkResponse) => {
-                  if (networkResponse && networkResponse.status === 200) {
-                    const responseClone = networkResponse.clone();
-                    caches.open(CACHE_NAME).then((cache) => cache.put(event.request, responseClone));
-                  }
-                  return networkResponse;
-                }).catch(() => caches.match('./'));
-              })
-            );
-          });
-        `;
-
-        const swBlob = new Blob([swCode], { type: "application/javascript" });
-        const swURL = URL.createObjectURL(swBlob);
-
-        window.addEventListener("load", () => {
-          navigator.serviceWorker.register(swURL).catch(() => {});
-        });
-      }
-    })();
-  </script>
 
   <script>
     /* =========================================================
@@ -1078,7 +963,6 @@
     let currentView = "tree";
     let treeHistory = ["root"];
     let favorites = JSON.parse(localStorage.getItem("edutools_favs") || "[]");
-    let deferredPrompt = null;
 
     let catalogState = {
       searchQuery: "",
@@ -1096,8 +980,6 @@
     const favCountBadge = document.getElementById("favCountBadge");
     const logoButton = document.getElementById("logoButton");
     const randomToolBtn = document.getElementById("randomToolBtn");
-    const pwaInstallBtn = document.getElementById("pwaInstallBtn");
-    const offlineBadge = document.getElementById("offlineBadge");
 
     // Views
     const viewTree = document.getElementById("viewTree");
@@ -1315,13 +1197,6 @@
 
       updateResultFavButton(toolId);
       resultFavBtn.onclick = () => toggleFavorite(toolId);
-
-      // Auto-scroll to result header on mobile devices
-      setTimeout(() => {
-        const yOffset = -20;
-        const y = resultArea.getBoundingClientRect().top + window.pageYOffset + yOffset;
-        window.scrollTo({ top: y, behavior: "smooth" });
-      }, 50);
     }
 
     function updateResultFavButton(toolId) {
@@ -1551,37 +1426,6 @@
     }
 
     window.addEventListener("DOMContentLoaded", () => {
-      // PWA Install Prompt Listener
-      window.addEventListener("beforeinstallprompt", (e) => {
-        e.preventDefault();
-        deferredPrompt = e;
-        pwaInstallBtn.classList.remove("hidden");
-      });
-
-      pwaInstallBtn.onclick = async () => {
-        if (!deferredPrompt) return;
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        if (outcome === "accepted") {
-          showToast("Applicazione installata con successo!", "📲");
-        }
-        deferredPrompt = null;
-        pwaInstallBtn.classList.add("hidden");
-      };
-
-      // Online/Offline Listeners
-      function updateOnlineStatus() {
-        if (navigator.onLine) {
-          offlineBadge.classList.add("hidden");
-        } else {
-          offlineBadge.classList.remove("hidden");
-          showToast("Connessione offline: le risorse salvate rimangono accessibili", "⚡");
-        }
-      }
-      window.addEventListener("online", updateOnlineStatus);
-      window.addEventListener("offline", updateOnlineStatus);
-      updateOnlineStatus();
-
       // Nav listeners
       navTree.onclick = () => switchView("tree");
       navCatalog.onclick = () => {
