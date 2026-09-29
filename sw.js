@@ -1,4 +1,4 @@
-const CACHE_NAME = 'edutools-pwa-v1';
+const CACHE_NAME = 'edutools-pwa-v2';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -9,14 +9,20 @@ const ASSETS_TO_CACHE = [
   'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap'
 ];
 
+// Installazione: carica ogni asset tollerando eventuali risorse mancanti
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME).then((cache) => {
-      return cache.addAll(ASSETS_TO_CACHE);
+      return Promise.allSettled(
+        ASSETS_TO_CACHE.map((url) =>
+          cache.add(url).catch((err) => console.warn(`Impossibile archiviare in cache ${url}:`, err))
+        )
+      );
     }).then(() => self.skipWaiting())
   );
 });
 
+// Attivazione: elimina le vecchie versioni della cache
 self.addEventListener('activate', (event) => {
   event.waitUntil(
     caches.keys().then((cacheNames) => {
@@ -31,29 +37,27 @@ self.addEventListener('activate', (event) => {
   );
 });
 
+// Intercettazione richieste
 self.addEventListener('fetch', (event) => {
   if (event.request.method !== 'GET') return;
 
   event.respondWith(
-    fetch(event.request)
-      .then((networkResponse) => {
-        if (networkResponse && networkResponse.status === 200) {
-          const responseToCache = networkResponse.clone();
-          caches.open(CACHE_NAME).then((cache) => {
-            cache.put(event.request, responseToCache);
-          });
+    caches.match(event.request).then((cachedResponse) => {
+      if (cachedResponse) {
+        // Aggiorna la cache in background se c'è connessione
+        fetch(event.request).then((networkResponse) => {
+          if (networkResponse && networkResponse.status === 200) {
+            caches.open(CACHE_NAME).then((cache) => cache.put(event.request, networkResponse));
+          }
+        }).catch(() => {});
+        return cachedResponse;
+      }
+
+      return fetch(event.request).catch(() => {
+        if (event.request.mode === 'navigate') {
+          return caches.match('./index.html');
         }
-        return networkResponse;
-      })
-      .catch(() => {
-        return caches.match(event.request).then((cachedResponse) => {
-          if (cachedResponse) {
-            return cachedResponse;
-          }
-          if (event.request.mode === 'navigate') {
-            return caches.match('./index.html');
-          }
-        });
-      })
+      });
+    })
   );
 });
