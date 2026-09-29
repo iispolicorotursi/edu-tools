@@ -1042,6 +1042,14 @@
     const modalExternalLink = document.getElementById("modalExternalLink");
     let activeModalToolId = null;
 
+    // Helper per lo scroll morbido ad inizio pagina
+    function scrollToTop() {
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+
     function showToast(message, icon = "✨") {
       const toastContainer = document.getElementById("toastContainer");
       const toast = document.createElement("div");
@@ -1116,11 +1124,7 @@
             pathBreadcrumbs.appendChild(arrow);
           }
         });
-      } else {
-        pathContainer.classList.add("hidden");
-      }
 
-      if (treeHistory.length > 1) {
         backButton.classList.remove("hidden");
         setTimeout(() => {
           const targetEl = document.getElementById("pathContainer") && !document.getElementById("pathContainer").classList.contains("hidden") 
@@ -1133,7 +1137,9 @@
           }
         }, 50);
       } else {
+        pathContainer.classList.add("hidden");
         backButton.classList.add("hidden");
+        scrollToTop(); // Torna a inizio pagina quando ci si trova sul primo passaggio
       }
 
       stepIndicator.textContent = stepData.stepName || "Passaggio";
@@ -1320,6 +1326,7 @@
       clearSearchBtn.classList.remove("hidden");
       switchView("catalog");
       renderCatalog();
+      scrollToTop();
     }
 
     function resetAllCatalogFilters() {
@@ -1338,6 +1345,7 @@
       
       updateToggleButtonsUI();
       renderCatalog();
+      scrollToTop();
     }
 
     function updateToggleButtonsUI() {
@@ -1446,6 +1454,7 @@
         treeHistory = ["root"];
         renderTreeStep();
         switchView("tree");
+        scrollToTop();
       };
 
       // Random Inspiration
@@ -1466,11 +1475,13 @@
       resetTreeBtn.onclick = () => {
         treeHistory = ["root"];
         renderTreeStep();
+        scrollToTop();
       };
 
       restartTreeBtn.onclick = () => {
         treeHistory = ["root"];
         renderTreeStep();
+        scrollToTop();
       };
 
       // Catalog Search Listeners
@@ -1544,15 +1555,34 @@
       updateFavBadge();
       renderTreeStep();
 
-      // Register Service Worker
+      // Service Worker Registration con Gestione Aggiornamenti
       if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./sw.js')
-          .then((registration) => {
-            console.log('Service Worker registrato con successo con scope:', registration.scope);
-          })
-          .catch((error) => {
-            console.error('Registrazione del Service Worker fallita:', error);
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('./sw.js').then((registration) => {
+            registration.update();
+
+            registration.onupdatefound = () => {
+              const installingWorker = registration.installing;
+              if (installingWorker == null) return;
+
+              installingWorker.onstatechange = () => {
+                if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                  showToast('Aggiornamento app in corso...', '🔄');
+                }
+              };
+            };
+          }).catch((error) => {
+            console.error('Registrazione Service Worker fallita:', error);
           });
+
+          let refreshing = false;
+          navigator.serviceWorker.addEventListener('controllerchange', () => {
+            if (!refreshing) {
+              refreshing = true;
+              window.location.reload();
+            }
+          });
+        });
       }
     });
   </script>
